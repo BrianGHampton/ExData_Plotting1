@@ -15,7 +15,11 @@ power$Date <- parse_date_time(power$Date, c('dmy', 'ymd'))
 # Subset 'power' to just input from 2007-02-01 and 2007-02-02 (Happy Groundhog's Day!)
 power_feb07 <- power[(Date >= "2007-01-31") & (Date <= "2007-02-02")]
 
-# Create a line plot of sub metering data versus time and save as a PNG
+# Create a new column in 'power_feb07' that is the combined date and time
+datetime <- paste(as.Date(power_feb07$Date), power_feb07$Time)
+power_feb07$Datetime <- as.POSIXct(datetime)
+
+# Create a 4 charts of data versus time and save as a PNG
 png("plot4.png", width = 480, height = 480)
 par(mfrow = c(2,2))
 with(power_feb07, {
