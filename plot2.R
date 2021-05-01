@@ -2,8 +2,9 @@
 ### it as a PNG) of global active power for 2007-02-01 and 2007-02-02
 ### from file: household_power_consumption.txt
 
-# Load the lubridate package
+# Load the needed packages
 library(lubridate)
+library(datasets)
 
 # Read the data (from the working directory)
 power <- data.table::fread(input = "household_power_consumption.txt",
@@ -19,11 +20,12 @@ power_feb07 <- power[(Date >= "2007-01-31") & (Date <= "2007-02-02")]
 datetime <- paste(as.Date(power_feb07$Date), power_feb07$Time)
 power_feb07$Datetime <- as.POSIXct(datetime)
 
-# Create a line plot of global active power versus time and save as a PNG
-png("plot2.png", width=480, height=480)
+# Create a line plot of global active power versus time 
 with(power_feb07, {
         plot(Global_active_power~Datetime,
              ylab="Global Active Power (kilowatts)", xlab="", type="l")
 })
-dev.off()
 
+# Save the plot as a PNG file
+dev.copy(png, "plot2.png", width = 480, height = 480)
+dev.off()
