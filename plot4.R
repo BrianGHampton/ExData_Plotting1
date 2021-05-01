@@ -2,8 +2,9 @@
 ### (and saved as a PNG) of data from 2007-02-01 and 2007-02-02
 ### from file: household_power_consumption.txt
 
-# Load the lubridate package
+# Load the needed packages
 library(lubridate)
+library(datasets)
 
 # Read the data (from the working directory)
 power <- data.table::fread(input = "household_power_consumption.txt",
@@ -20,7 +21,7 @@ datetime <- paste(as.Date(power_feb07$Date), power_feb07$Time)
 power_feb07$Datetime <- as.POSIXct(datetime)
 
 # Create a 4 charts of data versus time and save as a PNG
-png("plot4.png", width = 480, height = 480)
+dev.copy(png, "plot4.png", width = 480, height = 480)
 par(mfrow = c(2,2))
 with(power_feb07, {
         plot(Global_active_power~Datetime, ### the upper left plot
