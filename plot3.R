@@ -2,8 +2,9 @@
 ### it as a PNG) of the 3 sub metering variables for 2007-02-01 and
 ### 2007-02-02 from file: household_power_consumption.txt
 
-# Load the lubridate package
+# Load the needed packages
 library(lubridate)
+library(datasets)
 
 # Read the data (from the working directory)
 power <- data.table::fread(input = "household_power_consumption.txt",
@@ -20,7 +21,7 @@ datetime <- paste(as.Date(power_feb07$Date), power_feb07$Time)
 power_feb07$Datetime <- as.POSIXct(datetime)
 
 # Create a line plot of sub metering data versus time and save as a PNG
-png("plot3.png", width = 480, height = 480)
+dev.copy(png, "plot3.png", width = 480, height = 480)
 with(power_feb07, {
         plot(Sub_metering_1~Datetime,
                 ylab = "Energy sub metering", xlab = "", type = "l")
